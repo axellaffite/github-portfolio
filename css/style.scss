@@ -6,7 +6,7 @@ $keyword: #ec5f67;
 $keyword-bis: #e78a4e;
 $import: #d16d92;
 $attribute: #d8a657;
-$text: #a9b665;
+$string: #a9b665;
 $variable-param: #62b3b2;
 $variable: #6699cc;
 $text: #ffffff;
@@ -36,16 +36,38 @@ html, body {
     word-break: break-all;
     width: 100%;
     height: 100%;
-    padding: 0 0.5ch;
+    padding: 0 0.5ch 0.5ch 0.5ch;
+    overflow-y: auto;
 }
 
 #input {
     all: unset;
-    color: red;
+    color: transparent;
     word-break: break-all;
-    width: 100%;
+    width: fit-content;
     caret-shape: block;
     caret-color: #62b3b2;
+    text-align: end;
+    padding: 0;
+    margin: 0;
+
+    transform: rotateZ(180deg);
+}
+
+#commands-input {
+    display: inline-flex;
+}
+
+#command {
+    width: fit-content;
+}
+
+label[for=input] {
+    background: black;
+    width: 100%;
+}
+
+#display {
 }
 
 
