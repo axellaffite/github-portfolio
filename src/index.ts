@@ -11,4 +11,4 @@ It's an interactive terminal.
 If you need help, type 'help'.`
 )
 
-loadPortfolio().then(() => alert("ok"))
+loadPortfolio().then(() => console.log("Portfolio downloaded"))
