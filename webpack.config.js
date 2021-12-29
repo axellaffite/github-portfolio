@@ -2,7 +2,6 @@ const path = require('path');
 
 module.exports = {
     entry: './src/index.ts',
-    watch: true,
     watchOptions: {
         aggregateTimeout: 200,
         poll: 1000,
