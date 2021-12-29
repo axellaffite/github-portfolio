@@ -1,0 +1,27 @@
+#firstName: string,
+#lastName: string,
+#mail: string,
+#github: string
+#projects: Project[],
+#languages: string[]
+
+#Project:
+#    name: string,
+#    short: string,
+#    technologies: string[],
+#    description: string
+
+firstName: Axel
+lastName: Laffite
+mail: axel.laffite@master-developpement-logiciel.fr
+github: https://www.github.com/axellaffite
+projects:
+    - name: "EDT UT3"
+      short: |
+          Project which enables the student of the Paul Sabatier university to acess
+          their Celcat schedule from their phone.
+      technologies:
+          - Kotlin
+          - Java
+          - Android
+      description: 'test'

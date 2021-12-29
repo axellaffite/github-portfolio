@@ -1,5 +1,6 @@
-import { splitCommand } from "./command-splitter"
+import {formatArgumentForCommand, splitCommand} from "./command-splitter"
 import {ColoredKeyword, highlightSyntax, keywordColor, variable_paramColor} from "./highlighter";
+import {executeCommand} from "./commands";
 
 const terminal: HTMLElement = document.getElementById('terminal')
 const command: HTMLElement = document.getElementById('command')
@@ -12,12 +13,18 @@ document.addEventListener('readystatechange', () => { resizeFont() })
 input.oninput = (event) => onType(input)
 input.onkeydown = (event) => onKeyDown(event)
 
+export function clearTerminal(): void {
+    while (display.firstChild) {
+        display.removeChild(display.firstChild)
+    }
+}
+
 const prompt = [{ color: keywordColor, keyword: '$visitor: '}]
 export function initCommandPrompt(): void {
     displayContent(command, false, prompt)
 }
 
-export function displayText(text: string): void {
+export function displayText(text: string, interpret = false): void {
     text.split(/\r\n|\n/g)
         .map(line => { return {color: variable_paramColor, keyword: line} })
         .forEach(line => displayContent(display, true, [line]))
@@ -39,10 +46,6 @@ export function resizeFont() {
     setTimeout(() => {
         document.body.style.fontSize = `${getOptimalFontSize()}px`
     })
-}
-
-function animateDisplay() {
-
 }
 
 function onKeyDown(event: KeyboardEvent): void {
@@ -70,11 +73,18 @@ function onType(el: HTMLInputElement, confirm = false): void {
     if (confirm) {
         initCommandPrompt()
     }
+
     displayContent(target, confirm, withPrompt)
+
+    if (confirm) {
+        executeCommand(formatArgumentForCommand(splitted), displayText)
+    }
 
     if (confirm) {
         input.value = ''
     }
+
+    input.scrollIntoView({behavior: "smooth"})
 }
 
 function displayContent(targetElement: HTMLElement, block: boolean, coloredKeywords: ColoredKeyword[]): void {

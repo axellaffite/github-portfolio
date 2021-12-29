@@ -1,3 +1,5 @@
+import {Argument, Command, commands} from "./commands";
+
 export const backgroundColor = '#282C34';
 export const background_bisColor = '#1b2b34';
 export const keywordColor = '#ec5f67';
@@ -11,39 +13,8 @@ export const textColor = '#ffffff';
 
 export interface Colored { color: string }
 
-export interface Command extends Argument {
-    args?: { [key: string]: Argument }
-}
-
-export interface Argument {
-    hasValue: boolean,
-    acceptedValues?: Set<string>
-}
-
 export interface ColoredKeyword extends Colored {
     keyword: string
-}
-
-const commands: { [key: string]: Command } = {
-    "help": { hasValue: false },
-
-    "list": {
-        hasValue: true,
-        acceptedValues: new Set<string>(["projects", "languages", "interests"])
-    },
-
-    "show": {
-        hasValue: true,
-        args: {
-            "project": {
-                hasValue: true
-            },
-
-            "contact": {
-                hasValue: false
-            }
-        }
-    }
 }
 
 export function highlightSyntax(args: string[]): ColoredKeyword[] {
@@ -59,7 +30,7 @@ export function highlightSyntax(args: string[]): ColoredKeyword[] {
         if (!command) throw 'Unknown command'
         result.push({ color: importColor, keyword: args[0] })
 
-        const parseArg = (current: Command & Argument, requiredDone = false): void => {
+        const parseArg = (current: Argument & Command, requiredDone = false): void => {
             const arg = args[i++]
             if (!arg) return
 
@@ -78,7 +49,7 @@ export function highlightSyntax(args: string[]): ColoredKeyword[] {
             if (current.args) {
                 if (!current.args[arg]) throw "Not in possible arguments"
                 result.push({ color: variableColor, keyword: arg })
-                return parseArg(current.args[arg], requiredDone)
+                return parseArg(current.args[arg] as Command, requiredDone)
             }
 
             result.push({ color: stringColor, keyword: arg })

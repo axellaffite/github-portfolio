@@ -99,3 +99,10 @@ export function splitCommand(command: string): string[] {
 
     return state.result
 }
+
+export function formatArgumentForCommand(args: string[]): string[] {
+    return args
+        .map(it => it.trim())
+        .map(it => it.replace(/^'|'$/g, ''))
+        .filter(it => it.length > 0)
+}
