@@ -1,8 +1,8 @@
-import {help} from "./commands/help";
-import {list} from "./commands/list";
-import {clear} from "./commands/clear";
-import {show} from "./commands/show";
-import {addToCommandHistory} from "./commandHistory";
+import {help} from "./help";
+import {list} from "./list";
+import {clear} from "./clear";
+import {show} from "./show";
+import {addToCommandHistory} from "../commandHistory";
 
 export interface Argument {
     hasValue: boolean,

@@ -1,4 +1,4 @@
-import {Command} from "../commands";
+import {Command} from "./commands";
 import {getPortfolio, Project} from "../project";
 
 const description =

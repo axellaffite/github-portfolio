@@ -1,5 +1,5 @@
 import "./terminal"
-import "./command-splitter"
+import "./parser/command-splitter"
 import {displayText, initCommandPrompt} from "./terminal";
 import {loadPortfolio} from "./project";
 

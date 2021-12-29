@@ -1,4 +1,4 @@
-import {Argument, Command, commands} from "./commands";
+import {Argument, Command, commands} from "../commands/commands";
 
 export const backgroundColor = '#282C34';
 export const background_bisColor = '#1b2b34';

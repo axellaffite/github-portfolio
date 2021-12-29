@@ -1,6 +1,6 @@
-import {formatArgumentForCommand, splitCommand} from "./command-splitter"
-import {ColoredKeyword, highlightSyntax, keywordColor, variable_paramColor} from "./highlighter";
-import {executeCommand} from "./commands";
+import {formatArgumentForCommand, splitCommand} from "./parser/command-splitter"
+import {ColoredKeyword, highlightSyntax, keywordColor, variable_paramColor} from "./parser/highlighter";
+import {executeCommand} from "./commands/commands";
 import {getCurrentHistory, moveBackward, moveForward} from "./commandHistory";
 
 const terminal: HTMLElement = document.getElementById('terminal')
