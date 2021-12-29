@@ -2,6 +2,20 @@ firstName: Axel
 lastName: Laffite
 mail: axel.laffite@master-developpement-logiciel.fr
 github: https://www.github.com/axellaffite
+initialMessage: >+
+
+  {%center {%img[rounded,small] assets/picture.jpg  %} %}
+   {%center {%h1 Axel Laffite %} %}
+   {%center {%url[Github] https://www.github.com/axellaffite %} %}
+   {%center {%url[axel.laffite@master-developpement-logiciel.fr] mailto:axel.laffite@master-developpement-logiciel.fr %} %}
+
+   {%center Hello and welcome to my portfolio ! %}
+   {%center It's an interactive terminal, so you have to type commands to access content %}
+   {%center If you're lost, simply type {%color[pink] help %} %}
+   {%center Here are some useful commands to begin with: %}
+   {%center {%color[pink] list %} {%color[green] projects %} %}
+   {%center {%color[pink] show %} {%color[blue] project %} {%color[green] 'edt ut3' %} %}
+   {%center {%color[pink] show %} {%color[green] contact %} %}
 projects:
   - name: EDT UT3
     short: Project that enables the students of the Paul sabatier university to see their schedule from their phone.
@@ -32,7 +46,7 @@ projects:
 
       {%h2 Some pictures of the application %}
 
-      {%center
+      {%evenly
       {%img[medium] https://raw.githubusercontent.com/axellaffite/ut3_calendar/master/previews/calendrier_white.jpg %}
       {%img[medium] https://raw.githubusercontent.com/axellaffite/ut3_calendar/master/previews/calendrier_dark.jpg %}
       {%img[medium] https://raw.githubusercontent.com/axellaffite/ut3_calendar/master/previews/calendrier_evenements_dark_week.jpg %}
@@ -62,7 +76,7 @@ projects:
 
       {%h2 Some renders made with this program %}
 
-      {%center
+      {%evenly
       {%img https://raw.githubusercontent.com/ElZozor/CPU-Raytracer/master/previews/paysage.png %}
       {%img https://raw.githubusercontent.com/ElZozor/CPU-Raytracer/master/previews/cube_minecraft.png %}
       %}
@@ -145,6 +159,6 @@ projects:
       {%img[small] https://raw.githubusercontent.com/axellaffite/ut3_calendar/master/previews/calendrier_dark.jpg %}
 
       {%h1 Centered content %}
-      {%center Centered text %}
-      {%center {%img[small] https://raw.githubusercontent.com/axellaffite/ut3_calendar/master/previews/calendrier_dark.jpg %} %}
-      {%center Text with image {%img[small] https://raw.githubusercontent.com/axellaffite/ut3_calendar/master/previews/calendrier_dark.jpg %} %}
+      {%evenly Centered text %}
+      {%evenly {%img[small] https://raw.githubusercontent.com/axellaffite/ut3_calendar/master/previews/calendrier_dark.jpg %} %}
+      {%evenly Text with image {%img[small] https://raw.githubusercontent.com/axellaffite/ut3_calendar/master/previews/calendrier_dark.jpg %} %}

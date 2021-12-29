@@ -3,6 +3,7 @@ import {list} from "./list";
 import {clear} from "./clear";
 import {show} from "./show";
 import {addToCommandHistory} from "../commandHistory";
+import {Terminal} from "../terminal";
 
 export interface Argument {
     hasValue: boolean,
@@ -13,7 +14,7 @@ export interface Command extends Argument {
     short: string,
     description: string,
     args?: { [key: string]: Argument },
-    execute: (args: string[], display: (lines: string, interpret: boolean) => void) => void
+    execute: (args: string[], terminal: Terminal) => void
 }
 
 export const commands: { [key: string]: Command } = {
@@ -23,10 +24,10 @@ export const commands: { [key: string]: Command } = {
     "show": show
 }
 
-export function executeCommand(args: string[], display: (lines: string, interpret: boolean) => void) {
+export function executeCommand(args: string[], terminal: Terminal) {
     if (args.length == 0) return
 
     addToCommandHistory(args)
     const [command, commandArgs] = [args[0], args.slice(1)]
-    commands[command]?.execute(commandArgs, display)
+    commands[command]?.execute(commandArgs, terminal)
 }

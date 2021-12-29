@@ -1,36 +1,53 @@
 import {formatArgumentForCommand, splitCommand} from "./parser/command-splitter"
-import {ColoredKeyword, highlightSyntax, keywordColor, variable_paramColor} from "./parser/highlighter";
+import {ColoredKeyword, highlightSyntax} from "./parser/highlighter";
 import {executeCommand} from "./commands/commands";
 import {getCurrentHistory, moveBackward, moveForward} from "./commandHistory";
 import {processTemplates} from "./template/templateProcessor";
+import {keywordColor, variable_paramColor} from "./colors";
 
-const terminal: HTMLElement = document.getElementById('terminal')
+const prompt = [{ color: keywordColor, keyword: '$visitor: '}]
+
+export interface Terminal {
+    display(text: string, interpret: boolean): void
+    displayPrompt(): void
+    clear(): void
+    enableInput(): void
+}
+
+export const getTerminal = () => terminal
+
+const terminal: Terminal = {
+    display(text: string, interpret = false) {
+        const splitted = text.split(/\r\n|\n/g)
+        const interpreted = interpret ? splitted.map(processTemplates) : splitted
+
+        return interpreted
+            .map(line => { return {color: variable_paramColor, keyword: line} })
+            .forEach(line => displayContent(display, true, [line], interpret))
+    },
+
+    displayPrompt() {
+        displayContent(command, false, prompt)
+    },
+
+    clear() {
+        while (display.firstChild) {
+            display.removeChild(display.firstChild)
+        }
+    },
+
+    enableInput() {
+        input.disabled = false
+    }
+}
+
+
 const command: HTMLElement = document.getElementById('command')
 const display: HTMLElement = document.getElementById('display')
 const input: HTMLInputElement = document.getElementById('input') as HTMLInputElement
 
 input.oninput = (event) => onType(input)
 input.onkeydown = (event) => onKeyDown(event)
-
-export function clearTerminal(): void {
-    while (display.firstChild) {
-        display.removeChild(display.firstChild)
-    }
-}
-
-const prompt = [{ color: keywordColor, keyword: '$visitor: '}]
-export function initCommandPrompt(): void {
-    displayContent(command, false, prompt)
-}
-
-export function displayText(text: string, interpret = false): void {
-    const splitted = text.split(/\r\n|\n/g)
-    const interpreted = interpret ? splitted.map(processTemplates) : splitted
-
-    return interpreted
-        .map(line => { return {color: variable_paramColor, keyword: line} })
-        .forEach(line => displayContent(display, true, [line], interpret))
-}
 
 function onKeyDown(event: KeyboardEvent): void {
     if (event.key.length === 1 || event.key.toLowerCase() === 'backspace') {
@@ -72,13 +89,13 @@ function onType(el: HTMLInputElement, confirm = false): void {
     const withPrompt = prompt.concat(highlighted)
     const target = confirm ? display : command
     if (confirm) {
-        initCommandPrompt()
+        terminal.displayPrompt()
     }
 
     displayContent(target, confirm, withPrompt)
 
     if (confirm) {
-        executeCommand(formatArgumentForCommand(splitted), displayText)
+        executeCommand(formatArgumentForCommand(splitted), terminal)
     }
 
     if (confirm) {

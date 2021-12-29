@@ -1,4 +1,5 @@
 import {Command, commands} from "./commands";
+import {Terminal} from "../terminal";
 
 function availableCommands(): string[] {
     return Object.keys(commands)
@@ -38,12 +39,12 @@ export const help: Command = {
     hasValue: true,
     get acceptedValues() { return new Set<string>(availableCommands()) },
 
-    execute(args: string[], display: (lines: string, interpret: boolean) => void): void {
+    execute(args: string[], terminal: Terminal): void {
         if (args.length > 0) {
-            const displayCommand = (command: string) => display(getDetailedDescription(command), true)
+            const displayCommand = (command: string) => terminal.display(getDetailedDescription(command), true)
             args.forEach(displayCommand)
         } else {
-            display(this.description, true)
+            terminal.display(this.description, true)
         }
     }
 }

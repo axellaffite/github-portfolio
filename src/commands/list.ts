@@ -1,5 +1,6 @@
 import {Command} from "./commands";
 import {getPortfolio} from "../project";
+import {Terminal} from "../terminal";
 
 const description =
 `List all available options for a specific resource.
@@ -19,23 +20,23 @@ export const list: Command = {
     hasValue: true,
     acceptedValues: new Set<string>(["projects", "languages", "interests"]),
 
-    execute(args: string[], display: (lines: string, interpret: boolean) => void): void {
-        const show = (res: Resource) => listResource(display, res)
+    execute(args: string[], terminal: Terminal): void {
+        const show = (res: Resource) => listResource(terminal, res)
         args.forEach(show)
     }
 }
 
-function listResource(display: (lines: string, interpret: boolean) => void, res: Resource): void {
+function listResource(terminal: Terminal, res: Resource): void {
     switch (res) {
         case 'projects':
-            listProjects(display)
+            listProjects(terminal)
             break;
 
         default: break
     }
 }
 
-function listProjects(display: (lines: string, interpret: boolean) => void): void {
+function listProjects(terminal: Terminal): void {
     const portfolio = getPortfolio()
     const projectsDescription = portfolio.projects.map(project => {
         return `{%h2 ${project.name.toUpperCase()} %}`          + '\n' +
@@ -43,5 +44,5 @@ function listProjects(display: (lines: string, interpret: boolean) => void): voi
             "Technologies: " + project.technologies.join(", ")  + '\n'
     }).join('\n')
 
-    display(projectsDescription, true)
+    terminal.display(projectsDescription, true)
 }

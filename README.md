@@ -39,3 +39,20 @@ Some options are available to stylish the output of the interpreter :
  - `{%b text %}` is used to display a text in **bold**
  - `{%i text %}` is used to display a text in italic
  - `{%url http://url.com %}` is used to display a text as an url
+ - `{%color[hex or name] text %}` is used to display a colored text
+
+#### Available colors
+
+<div style="color: white">
+    <span style="padding: 0.5em; background:#282C34">dark-grey</span>
+    <span style="padding: 0.5em; background:#1b2b34">deep-blue</span>
+    <span style="padding: 0.5em; background:#ec5f67">mandy</span>
+    <span style="padding: 0.5em; background:#e78a4e">orange</span>
+    <span style="padding: 0.5em; background:#d16d92">pink</span>
+    <span style="padding: 0.5em; background:#d8a657">yellow</span>
+    <span style="padding: 0.5em; background:#a9b665">green</span>
+    <span style="padding: 0.5em; background:#62b3b2">tradewind</span>
+    <span style="padding: 0.5em; background:#6699cc">blue</span>
+    <span style="color: black; padding: 0.5em; background:#ffffff">white</span>
+    <span style="padding: 0.5em; background:#62b3b2">default</span>
+</div>

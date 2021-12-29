@@ -1,15 +1,5 @@
 import {Argument, Command, commands} from "../commands/commands";
-
-export const backgroundColor = '#282C34';
-export const background_bisColor = '#1b2b34';
-export const keywordColor = '#ec5f67';
-export const keyword_bisColor = '#e78a4e';
-export const importColor = '#d16d92';
-export const attributeColor = '#d8a657';
-export const stringColor = '#a9b665';
-export const variable_paramColor = '#62b3b2';
-export const variableColor = '#6699cc';
-export const textColor = '#ffffff';
+import {importColor, stringColor, textColor, variableColor} from "../colors";
 
 export interface Colored { color: string }
 

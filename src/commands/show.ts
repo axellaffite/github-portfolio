@@ -1,5 +1,6 @@
 import {Command} from "./commands";
 import {getPortfolio, Project} from "../project";
+import {Terminal} from "../terminal";
 
 const description =
 `Show a specific resource.
@@ -24,9 +25,9 @@ function projectAsString(project: Project) {
         project.description
 }
 
-function showProject(display: (lines: string, interpret: boolean) => void, args: string[]): void {
+function showProject(terminal: Terminal, args: string[]): void {
     if (args.length < 2) {
-        display("Missing argument 'project name'", true)
+        terminal.display("Missing argument 'project name'", true)
         return
     }
 
@@ -34,21 +35,21 @@ function showProject(display: (lines: string, interpret: boolean) => void, args:
     const portfolio = getPortfolio()
     const project = portfolio.projects.find(project => project.name.toLowerCase() === projectName)
     if (project === undefined) {
-        display(`Unable to find project '${projectName}'`, true)
+        terminal.display(`Unable to find project '${projectName}'`, true)
         return
     }
 
-    display(projectAsString(project), true)
+    terminal.display(projectAsString(project), true)
 }
 
-function showContact(display: (lines: string, interpret: boolean) => void) {
+function showContact(terminal: Terminal) {
     const portfolio = getPortfolio()
     const contact =
         `Name: ${portfolio.firstName} ${portfolio.lastName}` + '\n' +
         `E-mail: ${portfolio.mail}`                          + '\n' +
         `Github: ${portfolio.github}`
 
-    display(contact, true)
+    terminal.display(contact, true)
 }
 
 export const show: Command = {
@@ -60,16 +61,16 @@ export const show: Command = {
         "contact": { hasValue: false }
     },
 
-    execute(args: string[], display: (lines: string, interpret: boolean) => void): void {
+    execute(args: string[], terminal: Terminal): void {
         const resourceType = args[0]
 
         switch (resourceType) {
             case 'project':
-                showProject(display, args)
+                showProject(terminal, args)
                 break;
 
             case 'contact':
-                showContact(display)
+                showContact(terminal)
         }
     },
 }
