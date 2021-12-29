@@ -26,7 +26,7 @@ jobs:
       run: |
         npm install
         npx webpack
-        sass dist/css/style.scss dist/css/style.css
+        npx sass dist/css/style.scss dist/css/style.css
     
     - name: Deploy
       uses: s0/git-publish-subdir-action@develop
