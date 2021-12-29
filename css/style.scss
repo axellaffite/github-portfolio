@@ -30,6 +30,8 @@ html, body {
 
 #size-compute {
     width: fit-content;
+    height: 0;
+    overflow: hidden;
 }
 
 #terminal {
@@ -67,20 +69,16 @@ label[for=input] {
     width: 100%;
 }
 
-#display {
-}
-
-
 // Background styles
-.background { background: $background }
-.background-bis { background: $background-bis }
+.background { background: $background; }
+.background-bis { background: $background-bis; }
 
 // Text styles
-.keyword { color: $keyword }
-.keyword-bis { color: $keyword-bis }
-.keyword-bis { color: $keyword-bis }
-.import { color: $import }
-.attribute { color: $attribute }
-.text { color: $text }
-.variable { color: $variable }
-.variable-param { color: $variable-param }
+.keyword { color: $keyword; }
+.keyword-bis { color: $keyword-bis; }
+.keyword-bis { color: $keyword-bis; }
+.import { color: $import; }
+.attribute { color: $attribute; }
+.text { color: $text; }
+.variable { color: $variable; }
+.variable-param { color: $variable-param; }
