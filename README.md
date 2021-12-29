@@ -35,7 +35,7 @@ text that is being showed by the programs.
 ### Template language
 A template language is used to describe projects in the `assets/data.yaml` file.
 Some options are available to stylish the output of the interpreter :
- - `{%img http::/url-to-image.com%}` is used to display an image from a url
- - `{%b text%}` is used to display a text in **bold**
- - `{%i text%}` is used to display a text in italic
- - `{%url http://url.com}` is used to display a text as an url
+ - `{%img http::/url-to-image.com %}` is used to display an image from a url
+ - `{%b text %}` is used to display a text in **bold**
+ - `{%i text %}` is used to display a text in italic
+ - `{%url http://url.com %}` is used to display a text as an url

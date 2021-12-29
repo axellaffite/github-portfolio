@@ -18,9 +18,7 @@ If an information is needed, a project name for example, please see the list com
 `
 
 function projectAsString(project: Project) {
-    return "----------------------------------------"       + '\n' +
-        project.name.toUpperCase()                          + '\n' +
-        "----------------------------------------"          + '\n' +
+    return `{%h1 ${project.name.toUpperCase()} %}`          + '\n' +
         "Technologies: " + project.technologies.join(', ')  + '\n' +
         ""                                                  + '\n' +
         project.description

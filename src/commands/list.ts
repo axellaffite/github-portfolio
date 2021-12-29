@@ -20,29 +20,27 @@ export const list: Command = {
     acceptedValues: new Set<string>(["projects", "languages", "interests"]),
 
     execute(args: string[], display: (lines: string, interpret: boolean) => void): void {
-        const show = (res: Resource) => showResource(display, res)
+        const show = (res: Resource) => listResource(display, res)
         args.forEach(show)
     }
 }
 
-function showResource(display: (lines: string, interpret: boolean) => void, res: Resource): void {
+function listResource(display: (lines: string, interpret: boolean) => void, res: Resource): void {
     switch (res) {
         case 'projects':
-            showProjects(display)
+            listProjects(display)
             break;
 
         default: break
     }
 }
 
-function showProjects(display: (lines: string, interpret: boolean) => void): void {
+function listProjects(display: (lines: string, interpret: boolean) => void): void {
     const portfolio = getPortfolio()
     const projectsDescription = portfolio.projects.map(project => {
-        return "----------------------------------------"       + '\n' +
-            project.name.toUpperCase()                          + '\n' +
-            "----------------------------------------"          + '\n' +
-            "Technologies: " + project.technologies.join(", ")  + '\n' +
-            project.short                                       + '\n'
+        return `{%h2 ${project.name.toUpperCase()} %}`          + '\n' +
+            `{%i ${project.short} %}`                           + '\n' +
+            "Technologies: " + project.technologies.join(", ")  + '\n'
     }).join('\n')
 
     display(projectsDescription, true)
