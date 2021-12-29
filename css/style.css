@@ -54,7 +54,6 @@ html, body {
 }
 
 label[for=input] {
-  background: black;
   width: 100%;
 }
 
