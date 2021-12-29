@@ -11,12 +11,14 @@ $variable-param: #62b3b2;
 $variable: #6699cc;
 $text: #ffffff;
 
+
 * {
     margin: 0;
     padding: 0;
     font-family: 'VT323', monospace;
-    color: $text;
+    //color: $text;
     box-sizing: border-box;
+    font-size: 1.15em;
 }
 
 html, body {
@@ -69,6 +71,39 @@ html, body {
 label[for=input] {
     background: black;
     width: 100%;
+}
+
+#display {
+    .bold-text { font-weight: bold; }
+    .italic-text { font-style: italic; }
+    .inline { display: inline; }
+
+
+    img, video {
+        max-width: 90vw;
+        max-height: 80vh;
+        &.small { max-width: 10vw }
+        &.medium { max-width: 35vw }
+        &.large { max-width: 70vw }
+    }
+
+    a { color: $import }
+
+    span {
+        &.center {
+            margin: 1ch 0;
+            display: flex;
+            flex-wrap: wrap;
+            width: 100%;
+            max-width: 100%;
+            justify-content: space-evenly;
+            gap: 1ch
+        }
+
+        * {
+            display: inline;
+        }
+    }
 }
 
 // Background styles
