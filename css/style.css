@@ -1,5 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=VT323&display=swap");
 * {
+  scroll-behavior: smooth;
   margin: 0;
   padding: 0;
   font-family: "VT323", monospace;
@@ -29,7 +30,7 @@ html, body {
   overflow-y: auto;
 }
 #terminal * {
-  word-break: break-all;
+  word-break: break-word;
 }
 
 #input {
@@ -79,17 +80,26 @@ label[for=input] {
 #display img.large, #display video.large {
   max-width: 70vw;
 }
+#display img.rounded, #display video.rounded {
+  border-radius: 9999px;
+}
 #display a {
   color: #d16d92;
 }
-#display span.center {
+#display span.center, #display span.evenly {
+  text-align: center;
   margin: 1ch 0;
   display: flex;
   flex-wrap: wrap;
   width: 100%;
   max-width: 100%;
-  justify-content: space-evenly;
   gap: 1ch;
+}
+#display span.center {
+  justify-content: center;
+}
+#display span.evenly {
+  justify-content: space-evenly;
 }
 #display span * {
   display: inline;
