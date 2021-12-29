@@ -2,6 +2,7 @@ import {help} from "./commands/help";
 import {list} from "./commands/list";
 import {clear} from "./commands/clear";
 import {show} from "./commands/show";
+import {addToCommandHistory} from "./commandHistory";
 
 export interface Argument {
     hasValue: boolean,
@@ -25,6 +26,7 @@ export const commands: { [key: string]: Command } = {
 export function executeCommand(args: string[], display: (lines: string, interpret: boolean) => void) {
     if (args.length == 0) return
 
+    addToCommandHistory(args)
     const [command, commandArgs] = [args[0], args.slice(1)]
     commands[command]?.execute(commandArgs, display)
 }

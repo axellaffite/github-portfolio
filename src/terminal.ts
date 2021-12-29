@@ -1,6 +1,7 @@
 import {formatArgumentForCommand, splitCommand} from "./command-splitter"
 import {ColoredKeyword, highlightSyntax, keywordColor, variable_paramColor} from "./highlighter";
 import {executeCommand} from "./commands";
+import {getCurrentHistory, moveBackward, moveForward} from "./commandHistory";
 
 const terminal: HTMLElement = document.getElementById('terminal')
 const command: HTMLElement = document.getElementById('command')
@@ -53,9 +54,26 @@ function onKeyDown(event: KeyboardEvent): void {
         return
     }
 
+    console.log(event.key.toLowerCase())
     if (event.key.toLowerCase() === 'enter') {
         onType(event.target as HTMLInputElement, true)
     }
+
+    switch (event.key.toLowerCase()) {
+        case 'arrowup':
+            moveBackward()
+            input.value = getCurrentHistory() ?? ''
+            onType(input)
+            break;
+
+        case 'arrowdown':
+            moveForward()
+            input.value = getCurrentHistory() ?? ''
+            onType(input)
+            break;
+    }
+
+    if (event.key.toLowerCase())
 
     event.preventDefault()
 }
