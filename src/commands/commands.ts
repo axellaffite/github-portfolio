@@ -2,8 +2,8 @@ import {help} from "./help";
 import {list} from "./list";
 import {clear} from "./clear";
 import {show} from "./show";
-import {history} from "./commandHistory";
 import {Terminal} from "../terminal";
+import {history} from "../commandHistory";
 
 export interface Argument {
     hasValue: boolean,

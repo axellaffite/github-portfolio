@@ -138,6 +138,7 @@ function displayContent(
         } else {
             node.innerText = str.keyword
         }
+
         if (modifiers) {
             modifiers(node, lineIndex)
         }

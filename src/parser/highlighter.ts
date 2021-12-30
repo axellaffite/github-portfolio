@@ -72,6 +72,5 @@ export function highlightSyntax(args: string[]): ColoredKeyword[] {
         } while (currentValue !== undefined)
     }
 
-    console.log(result)
     return result
 }
