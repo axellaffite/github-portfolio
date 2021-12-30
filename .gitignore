@@ -100,3 +100,7 @@ fabric.properties
 .cache
 .eslintcache
 package-lock.json
+
+dist/css/*.css
+dist/css/*.map
+dist/app.js
