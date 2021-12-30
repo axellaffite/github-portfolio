@@ -1,6 +1,9 @@
-import {Command, commands} from "../commands";
+import {Command, commands} from "./commands";
+import {Terminal} from "../terminal";
 
-
+function availableCommands(): string[] {
+    return Object.keys(commands)
+}
 
 function generateDescription(): string {
     const commandsWithShorts = Object.entries(commands).map(([key, command]) => {
@@ -33,14 +36,15 @@ function getDetailedDescription(command: string): string {
 export const help: Command = {
     short: 'Show a help dialog',
     get description(): string { return generateDescription() },
-    hasValue: false,
+    hasValue: true,
+    get acceptedValues() { return new Set<string>(availableCommands()) },
 
-    execute(args: string[], display: (lines: string, interpret: boolean) => void): void {
+    execute(args: string[], terminal: Terminal): void {
         if (args.length > 0) {
-            const displayCommand = (command: string) => display(getDetailedDescription(command), true)
+            const displayCommand = (command: string) => terminal.display(getDetailedDescription(command), true)
             args.forEach(displayCommand)
         } else {
-            display(this.description, true)
+            terminal.display(this.description, true)
         }
     }
 }

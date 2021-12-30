@@ -1,5 +1,6 @@
-import {Command} from "../commands";
+import {Command} from "./commands";
 import {getPortfolio} from "../project";
+import {Terminal} from "../terminal";
 
 const description =
 `List all available options for a specific resource.
@@ -19,31 +20,34 @@ export const list: Command = {
     hasValue: true,
     acceptedValues: new Set<string>(["projects", "languages", "interests"]),
 
-    execute(args: string[], display: (lines: string, interpret: boolean) => void): void {
-        const show = (res: Resource) => showResource(display, res)
+    execute(args: string[], terminal: Terminal): void {
+        const show = (res: Resource) => listResource(terminal, res)
         args.forEach(show)
     }
 }
 
-function showResource(display: (lines: string, interpret: boolean) => void, res: Resource): void {
+function listResource(terminal: Terminal, res: Resource): void {
     switch (res) {
         case 'projects':
-            showProjects(display)
+            listProjects(terminal)
             break;
 
         default: break
     }
 }
 
-function showProjects(display: (lines: string, interpret: boolean) => void): void {
+function listProjects(terminal: Terminal): void {
     const portfolio = getPortfolio()
-    const projectsDescription = portfolio.projects.map(project => {
-        return "----------------------------------------"       + '\n' +
-            project.name.toUpperCase()                          + '\n' +
-            "----------------------------------------"          + '\n' +
-            "Technologies: " + project.technologies.join(", ")  + '\n' +
-            project.short                                       + '\n'
-    }).join('\n')
+    portfolio.projects.forEach(project => {
+        const projectContent =
+            `{%center {%h2 {%color[green] ${project.name.toUpperCase()} %} %} %}`       + '\n' +
+            `{%center ${project.short} %}`                                              + '\n' +
+            `{%center Technologies: ${project.technologies.join(", ")} %}`
 
-    display(projectsDescription, true)
+        terminal.display(projectContent, true)
+        const projectName = project.name
+        terminal.display('{%click {%center {%color[orange] Show this project %} %} %}\n', true, (el) => {
+            el.onclick = () => terminal.setInput(`show project '${projectName}'`)
+        })
+    })
 }

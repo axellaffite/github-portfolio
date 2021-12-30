@@ -1,27 +1,164 @@
-#firstName: string,
-#lastName: string,
-#mail: string,
-#github: string
-#projects: Project[],
-#languages: string[]
-
-#Project:
-#    name: string,
-#    short: string,
-#    technologies: string[],
-#    description: string
-
 firstName: Axel
 lastName: Laffite
 mail: axel.laffite@master-developpement-logiciel.fr
 github: https://www.github.com/axellaffite
+initialMessage: >+
+
+  {%center {%img[rounded,small] assets/picture.jpg  %} %}
+   {%center {%h1 Axel Laffite %} %}
+   {%center {%url[Github] https://www.github.com/axellaffite %} %}
+   {%center {%url[axel.laffite@master-developpement-logiciel.fr] mailto:axel.laffite@master-developpement-logiciel.fr %} %}
+
+   {%center Hello and welcome to my portfolio ! %}
+   {%center It's an interactive terminal, so you have to type commands to access content %}
+   {%center If you're lost, simply type {%color[pink] help %} %}
+   {%center Here are some useful commands to begin with: %}
+   {%center {%color[pink] list %} {%color[green] projects %} %}
+   {%center {%color[pink] show %} {%color[blue] project %} {%color[green] 'edt ut3' %} %}
+   {%center {%color[pink] show %} {%color[green] contact %} %}
 projects:
-    - name: "EDT UT3"
-      short: |
-          Project which enables the student of the Paul Sabatier university to acess
-          their Celcat schedule from their phone.
-      technologies:
-          - Kotlin
-          - Java
-          - Android
-      description: 'test'
+  - name: EDT UT3
+    short: Project that enables the students of the Paul sabatier university to see their schedule from their phone.
+    technologies:
+      - Kotlin
+      - Java
+      - Android
+    description: >+
+      {%h2 Useful links %}
+       - {%url[Github] https://github.com/axellaffite/ut3_calendar %}
+       - {%url[Play store] https://play.google.com/store/apps/details?id=com.edt.ut3 %}
+
+      {%h2 Description %}
+
+      EDT UT3 is an application available for Android that is used by the students of the {%url[Paul Sabatier University] https://www.univ-tlse3.fr/ %}.
+
+      This application allows to:
+       - Consult your Celcat schedule directly from your phone (with cache in local)
+       - Get notifications when the schedule is updated
+       - Take notes and pictures
+       - Set reminders
+       - Find free rooms available in the University
+       - Find building through an interactive map of the University
+
+
+      The application is available both in light and dark theme and in french and english languages.
+
+
+      {%h2 Some pictures of the application %}
+
+      {%evenly
+      {%img[medium] https://raw.githubusercontent.com/axellaffite/ut3_calendar/master/previews/calendrier_white.jpg %}
+      {%img[medium] https://raw.githubusercontent.com/axellaffite/ut3_calendar/master/previews/calendrier_dark.jpg %}
+      {%img[medium] https://raw.githubusercontent.com/axellaffite/ut3_calendar/master/previews/calendrier_evenements_dark_week.jpg %}
+      {%img[medium] https://raw.githubusercontent.com/axellaffite/ut3_calendar/master/previews/maps_dark.jpg %}
+      %}
+
+  - name: CPU Raytracer
+    short: Raytracer than runs on the CPU
+    technologies:
+      - C / C++
+    description: >+
+      {%h2 Useful links %}
+       - {%url[Github] https://github.com/axellaffite/CPU-Raytracer %}
+       - {%url[IGTAI contest] https://departement-informatique.univ-tlse3.fr/master-igai/l3-igtai/ %}
+
+      {%h2 Description %}
+       This project is a raytracer that runs on the CPU.
+       It has been made for a university project.
+       A contest has been made to elect the best project made by the students and it ranked first.
+       It enables parallelization on multiple cores.
+       Some functionalities have been implemented :
+        - Anti-aliasing
+        - Optimized anti-aliasing with edge detection (luma or sobel operators)
+        - Depth-of-field (with parameters for the focal point distance and range)
+        - Loading scenes generated from 3d programs trough .obj and .mtl files
+        - KD-trees have been used to improve render times
+
+      {%h2 Some renders made with this program %}
+
+      {%evenly
+      {%img https://raw.githubusercontent.com/ElZozor/CPU-Raytracer/master/previews/paysage.png %}
+      {%img https://raw.githubusercontent.com/ElZozor/CPU-Raytracer/master/previews/cube_minecraft.png %}
+      %}
+  - name: CUDA Raytracer
+    short: Raytracer than runs on the graphic card through CUDA
+    technologies:
+      - C / C++
+      - CUDA
+      - SFML
+    description: >+
+      {%h2 Useful links %}
+       - {%url[Github] https://github.com/axellaffite/Raytracer-SFML-CUDA %}
+       - {%url[IGTAI contest] https://departement-informatique.univ-tlse3.fr/master-igai/l3-igtai/ %}
+
+      {%h2 Description %}
+       This project is a raytracer that runs on the GPU through CUDA.
+       It has been made for a university project.
+       A contest has been made to elect the best project made by the students and it ranked first.
+
+       It's the continuation of the CPU raytracer, though we weren't asked to implement it with CUDA.
+       CUDA has been used to perform operations on the GPU and SFML has been used to render images on the screen.
+
+       It is not quited optimized as kd-trees haven't been implemented in this version of this program but on simple
+       scenes, it runs quite well (~100fps on the first scene on a gtx 960).
+       Also, even if it doesn't run smoothly on complex scenes, it largely reduces the render time compared to the CPU
+       one which can took several minutes for the most complicated scenes.
+
+
+      {%h2 Showcase of the application %}
+
+      {%video[large] https://departement-informatique.univ-tlse3.fr/master-igai/wp-content/uploads/sites/4/2020/09/22-7-l-1.mp4 %}
+
+  - name: Fast gallery
+    short: An Android library that is used to download, cache and display images.
+    technologies:
+      - Kotlin
+      - Android
+    description: >+
+      {%url[ Github repository ] https://github.com/axellaffite/Fast-Gallery %}
+
+       {%h2 Description %}
+       It's a simple library that enables you to download images from the web, cache them in your application and
+      display them in a nice slider.
+       This application relies on the great {%url[Subsampling Scale Image View] https://github.com/davemorrissey/subsampling-scale-image-view %}
+      library which enables Fast Gallery to display very large images very smoothly by caching and reading only the required
+      parts of big images and so, improve performances and memory usage.
+
+
+      {%h2 Some renders made with this program %}
+
+      {%img https://github.com/axellaffite/Fast-Gallery/blob/master/previews/FastGallery.gif?raw=true %}
+
+  - name: Terminal showcase
+    short: Showcase for terminal functionalities
+    technologies:
+      - yaml
+    description: |
+      {%h1 Titles: %}
+      {%h1 Title 1 %} -> {%h1 Title 1 %}
+      {%h2 Title 2 %} -> {%h2 Title 2 %}
+      {%h3 Title 3 %} -> {%h3 Title 3 %}
+      {%h4 Title 4 %} -> {%h4 Title 4 %}
+      {%h5 Title 5 %} -> {%h5 Title 5 %}
+      Classic text
+
+      {%h1 Text styles: %}
+      {%b bold %} -> {%b bold %}
+      {%i italic %} -> {%i italic %}
+
+      {%h1 Visual / Interactive elements: %}
+      {%url https://www.github.com %} -> {%url https://www.github.com %}
+      {%url[My github] https://www.github.com/axellaffite %} -> {%url[My github] https://www.github.com/axellaffite %}
+      {%h2 Image: %}
+      {%img https://raw.githubusercontent.com/axellaffite/ut3_calendar/master/previews/calendrier_dark.jpg %}
+      {%h2 Image large: %}
+      {%img[large] https://raw.githubusercontent.com/axellaffite/ut3_calendar/master/previews/calendrier_dark.jpg %}
+      {%h2 Image medium: %}
+      {%img[medium] https://raw.githubusercontent.com/axellaffite/ut3_calendar/master/previews/calendrier_dark.jpg %}
+      {%h2 Image small: %}
+      {%img[small] https://raw.githubusercontent.com/axellaffite/ut3_calendar/master/previews/calendrier_dark.jpg %}
+
+      {%h1 Centered content %}
+      {%evenly Centered text %}
+      {%evenly {%img[small] https://raw.githubusercontent.com/axellaffite/ut3_calendar/master/previews/calendrier_dark.jpg %} %}
+      {%evenly Text with image {%img[small] https://raw.githubusercontent.com/axellaffite/ut3_calendar/master/previews/calendrier_dark.jpg %} %}
