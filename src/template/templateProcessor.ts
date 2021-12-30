@@ -28,6 +28,7 @@ export function processTemplates(text: string): string {
         .replace(/{%h(\d) (.*?) %}/g, (_, lvl, m) => `<h${lvl}>${m}</h${lvl}>`)
         .replace(/{%b (.*?) %}/g, (_, m) => `<span class="bold-text">${m}</span>`)
         .replace(/{%i (.*?) %}/g, (_, m) => `<span class="italic-text">${m}</span>`)
+        .replace(/{%click (.*?) %}/g, (_, m) => `<span class="clickable">${m}</span>`)
         .replace(/{%center (.*?) %}/g, (_, m) => `<span class="center">${m}</span>`)
         .replace(/{%evenly (.*?) %}/g, (_, m) => `<span class="evenly">${m}</span>`)
 

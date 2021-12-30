@@ -38,11 +38,16 @@ function listResource(terminal: Terminal, res: Resource): void {
 
 function listProjects(terminal: Terminal): void {
     const portfolio = getPortfolio()
-    const projectsDescription = portfolio.projects.map(project => {
-        return `{%center {%h2 {%color[green] ${project.name.toUpperCase()} %} %} %}`    + '\n' +
+    portfolio.projects.forEach(project => {
+        const projectContent =
+            `{%center {%h2 {%color[green] ${project.name.toUpperCase()} %} %} %}`       + '\n' +
             `{%center ${project.short} %}`                                              + '\n' +
-            `{%center Technologies: ${project.technologies.join(", ")} %} `             + '\n'
-    }).join('\n')
+            `{%center Technologies: ${project.technologies.join(", ")} %}`
 
-    terminal.display(projectsDescription, true)
+        terminal.display(projectContent, true)
+        const projectName = project.name
+        terminal.display('{%click {%center {%color[orange] Show this project %} %} %}\n', true, (el) => {
+            el.onclick = () => terminal.setInput(`show project '${projectName}'`)
+        })
+    })
 }
