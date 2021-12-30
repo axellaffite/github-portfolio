@@ -39,9 +39,9 @@ function listResource(terminal: Terminal, res: Resource): void {
 function listProjects(terminal: Terminal): void {
     const portfolio = getPortfolio()
     const projectsDescription = portfolio.projects.map(project => {
-        return `{%h2 ${project.name.toUpperCase()} %}`          + '\n' +
-            `{%i ${project.short} %}`                           + '\n' +
-            "Technologies: " + project.technologies.join(", ")  + '\n'
+        return `{%center {%h2 {%color[green] ${project.name.toUpperCase()} %} %} %}`    + '\n' +
+            `{%center ${project.short} %}`                                              + '\n' +
+            `{%center Technologies: ${project.technologies.join(", ")} %} `             + '\n'
     }).join('\n')
 
     terminal.display(projectsDescription, true)

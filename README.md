@@ -1,5 +1,5 @@
 # Portfolio
-This portfolio is an interactive terminal. You can type commands and it execute them.
+This portfolio is an interactive terminal. You can type commands and it will execute them.
 
 ## Available commands
 ### clear
