@@ -91,6 +91,7 @@ label[for=input] {
     a { color: $import }
 
     span {
+        &.clickable { cursor: pointer }
         &.center, &.evenly {
             text-align: center;
             margin: 1ch 0;

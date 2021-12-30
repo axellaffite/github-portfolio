@@ -6,12 +6,12 @@
     <link rel="preconnect" href="fonts/VT323-Regular.ttf">
     <link rel="stylesheet" href="css/style.css">
 </head>
-<body onload="" class="background-bis" onfocus="input.focus()">
-    <div id="terminal" tabindex="-1" onfocus="input.focus()">
+<body onload="" class="background-bis" onfocus="input.focus({preventScroll: true})">
+    <div id="terminal" tabindex="-1" onfocus="input.focus({preventScroll: true})">
         <div id="display"></div>
         <div id="commands-input">
             <span id="command"></span>
-            <input dir= "ltr" id="input" style="width: 1.5px" onblur="this.focus()" onfocusout="this.focus()" autofocus disabled>
+            <input dir= "ltr" id="input" style="width: 1.5px" onblur="this.focus({preventScroll: true})" autofocus disabled>
         </div>
     </div>
 
