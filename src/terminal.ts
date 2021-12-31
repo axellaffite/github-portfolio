@@ -59,6 +59,8 @@ const terminal: Terminal = {
         input.value = text
         input.focus()
         onType(input, false, updateAutocomplete)
+
+        setTimeout(() => { input.selectionStart = input.selectionEnd = 10000 }, 0)
     }
 }
 
@@ -82,14 +84,12 @@ function onKeyDown(event: KeyboardEvent): void {
     switch (event.key.toLowerCase()) {
         case 'arrowup':
             history.moveBackward()
-            input.value = history.currentCommand ?? ''
-            onType(input)
+            terminal.setInput(history.currentCommand ?? '', true)
             break;
 
         case 'arrowdown':
             history.moveForward()
-            input.value = history.currentCommand ?? ''
-            onType(input)
+            terminal.setInput(history.currentCommand ?? '', true)
             break;
 
         case 'arrowright':
