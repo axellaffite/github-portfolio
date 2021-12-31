@@ -6,12 +6,21 @@
     <link rel="preconnect" href="fonts/VT323-Regular.ttf">
     <link rel="stylesheet" href="css/style.css">
 </head>
-<body onload="" class="background-bis" onfocus="input.focus({preventScroll: true})">
-    <div id="terminal" tabindex="-1" onfocus="input.focus({preventScroll: true})">
+
+<script>
+    function focusOnClick() {
+        if (!getSelection().toString()) {
+            document.getElementById('input').focus()
+        }
+    }
+</script>
+
+<body onload="" class="background-bis" onclick="focusOnClick()">
+    <div id="terminal" tabindex="-1" onclick="focusOnClick()">
         <div id="display"></div>
         <div id="commands-input">
             <span id="command"></span>
-            <input dir= "ltr" id="input" style="width: 1.5px" onblur="this.focus({preventScroll: true})" autofocus disabled>
+            <input dir= "ltr" id="input" style="width: 0" onblur="focusOnClick()" autofocus disabled>
         </div>
     </div>
 
