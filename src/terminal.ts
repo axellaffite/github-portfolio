@@ -1,13 +1,14 @@
 import {formatArgumentForCommand, splitCommand} from "./parser/command-splitter"
 import {ColoredKeyword, highlightSyntax} from "./parser/highlighter";
-import {executeCommand} from "./commands/commands";
+import {autocompleteCommand, executeCommand} from "./commands/commands";
 import {history} from "./commandHistory";
 import {processTemplates} from "./template/templateProcessor";
-import {keywordColor, variable_paramColor} from "./colors";
+import {autocompleteColor, keywordColor, variable_paramColor} from "./colors";
 
 const prompt = [{ color: keywordColor, keyword: '$visitor: '}]
 
 export interface Terminal {
+    initWith(initialMessage: string, interpret: boolean): void
     display(text: string, interpret: boolean, modifiers?: (el: HTMLElement, lineIndex: number) => void): void
     displayPrompt(): void
     clear(): void
@@ -18,6 +19,11 @@ export interface Terminal {
 export const getTerminal = () => terminal
 
 const terminal: Terminal = {
+    initWith(initialMessage: string, interpret: boolean) {
+        this.display(initialMessage, interpret)
+        onType(input, false, true)
+    },
+
     display(text: string, interpret = false, modifiers = (el: HTMLElement) => {}) {
         const splitted = text.split(/\r\n|\n/g)
         const interpreted = interpret ? splitted.map(processTemplates) : splitted
@@ -35,6 +41,7 @@ const terminal: Terminal = {
         while (display.firstChild) {
             display.removeChild(display.firstChild)
         }
+        input.value = ''
     },
 
     enableInput() {
@@ -62,7 +69,6 @@ function onKeyDown(event: KeyboardEvent): void {
         return
     }
 
-    console.log(event.key.toLowerCase())
     if (event.key.toLowerCase() === 'enter') {
         onType(event.target as HTMLInputElement, true)
     }
@@ -79,6 +85,18 @@ function onKeyDown(event: KeyboardEvent): void {
             input.value = history.currentCommand ?? ''
             onType(input)
             break;
+
+        case 'arrowright':
+            autocomplete.nextValue()
+            break;
+
+        case 'arrowleft':
+            autocomplete.prevValue()
+            break;
+
+        case 'tab':
+            autocomplete.apply()
+            break
     }
 
     if (event.key.toLowerCase())
@@ -86,28 +104,68 @@ function onKeyDown(event: KeyboardEvent): void {
     event.preventDefault()
 }
 
-function onType(el: HTMLInputElement, confirm = false): void {
+const autocomplete = {
+    values: [] as string[],
+    index: 0,
+
+    setValues(values: string[]) {
+        this.values = values
+        this.index = 0
+    },
+
+    get currentValueOrEmpty(): string {
+        return this.values[this.index] ?? ''
+    },
+
+    nextValue() { this.updateIndex(+1) },
+    prevValue() { this.updateIndex(-1) },
+
+    updateIndex(offset: number) {
+        const mod = (a: number , b: number) => ((a % b) + b) % b
+        if (this.values.length == 0) this.index = 0
+        else this.index = mod((this.index + offset), this.values.length)
+
+        onType(input, false, false)
+    },
+
+    apply() {
+        const toApply = this.values[this.index]
+        if (!toApply) return
+
+        input.value += toApply
+        onType(input, false)
+    }
+}
+
+function onType(el: HTMLInputElement, confirm = false, updateAutocomplete = true): void {
     const value = el.value
     const splitted = splitCommand(value)
-    const highlighted = highlightSyntax(splitted)
+    const formatted = formatArgumentForCommand(splitted)
+    if (updateAutocomplete || autocomplete.values.length == 0) {
+        autocomplete.setValues(
+            confirm
+                ? []
+                : autocompleteCommand(formatted, (splitted[splitted.length - 1] ?? '').match(/\s|'/g) != null)
+        )
+    }
+
+    const highlighted = highlightSyntax(splitted).concat([
+        {color: autocompleteColor, keyword: (autocomplete.currentValueOrEmpty), cursor: true} as ColoredKeyword
+    ])
+
     while (command.firstChild) {
         command.removeChild(command.firstChild)
     }
 
     const withPrompt = prompt.concat(highlighted)
     const target = confirm ? display : command
-    if (confirm) {
-        terminal.displayPrompt()
-    }
-
     displayContent(target, confirm, withPrompt, 0, false)
 
     if (confirm) {
-        executeCommand(formatArgumentForCommand(splitted), terminal)
-    }
-
-    if (confirm) {
+        executeCommand(formatted, terminal)
         input.value = ''
+        terminal.displayPrompt()
+        onType(el)
     }
 
     input.scrollIntoView({behavior: "smooth"})
@@ -116,7 +174,7 @@ function onType(el: HTMLInputElement, confirm = false): void {
 function displayContent(
     targetElement: HTMLElement,
     block: boolean,
-    coloredKeywords: ColoredKeyword[],
+    coloredKeywords: (ColoredKeyword & { cursor?: boolean })[],
     lineIndex: number,
     interpreted = false,
     modifiers?: (el: HTMLElement, lineIndex: number) => void
@@ -131,6 +189,11 @@ function displayContent(
     for (const str of coloredKeywords) {
         const node = document.createElement('span')
         node.style.color = str.color
+
+        if (str.cursor) {
+            node.classList.add('cursor')
+        }
+
         if (str.keyword.trim().length === 0) {
             node.innerHTML = '&nbsp;'
         } else if (interpreted) {
@@ -142,6 +205,7 @@ function displayContent(
         if (modifiers) {
             modifiers(node, lineIndex)
         }
+
         finalTarget.appendChild(node)
     }
 }

@@ -20,6 +20,15 @@ export const list: Command = {
     hasValue: true,
     acceptedValues: new Set<string>(["projects", "languages", "interests"]),
 
+    autocomplete(args: string[], trailingSpace: boolean): string[] {
+        const prefix = trailingSpace ? '' : ' '
+        const acceptedValues: string[] = (Array.from(this.acceptedValues) as string[]).sort()
+        const arg = args[0]
+        if (!arg) return acceptedValues.map(it => `${prefix}${it}`)
+
+        return acceptedValues.filter(it => it.startsWith(arg))
+    },
+
     execute(args: string[], terminal: Terminal): void {
         const show = (res: Resource) => listResource(terminal, res)
         args.forEach(show)

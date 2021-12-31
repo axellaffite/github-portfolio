@@ -43,8 +43,7 @@ displayLoading(() => {
     if (!error) {
         terminal.enableInput()
         terminal.clear()
-        terminal.display(getPortfolio().initialMessage, true)
-        terminal.displayPrompt()
+        terminal.initWith(getPortfolio().initialMessage, true)
     }
 })
 

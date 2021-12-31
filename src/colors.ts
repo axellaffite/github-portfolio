@@ -8,6 +8,7 @@ export const stringColor = '#a9b665';
 export const variable_paramColor = '#62b3b2';
 export const variableColor = '#6699cc';
 export const textColor = '#ffffff';
+export const autocompleteColor = '#4f5b66';
 
 export const colors = {
     'dark-grey': backgroundColor,

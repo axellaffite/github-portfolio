@@ -1,9 +1,5 @@
-import {Command, commands} from "./commands";
+import {availableCommands, Command, commands} from "./commands";
 import {Terminal} from "../terminal";
-
-function availableCommands(): string[] {
-    return Object.keys(commands)
-}
 
 function generateDescription(): string {
     const commandsWithShorts = Object.entries(commands).map(([key, command]) => {
@@ -37,7 +33,15 @@ export const help: Command = {
     short: 'Show a help dialog',
     get description(): string { return generateDescription() },
     hasValue: true,
-    get acceptedValues() { return new Set<string>(availableCommands()) },
+    get acceptedValues() { return new Set<string>(availableCommands) },
+
+    autocomplete(args: string[], trailingSpace: boolean): string[] {
+        const prefix = trailingSpace ? '' : ' '
+        const arg = args[0]
+        if (!arg) return availableCommands.map(it => `${prefix}${it}`)
+
+        return availableCommands.filter(it => it.startsWith(arg))
+    },
 
     execute(args: string[], terminal: Terminal): void {
         if (args.length > 0) {

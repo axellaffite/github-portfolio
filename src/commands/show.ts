@@ -1,4 +1,4 @@
-import {Command} from "./commands";
+import {Argument, Command} from "./commands";
 import {getPortfolio, Project} from "../project";
 import {Terminal} from "../terminal";
 
@@ -57,8 +57,38 @@ export const show: Command = {
     description: description,
     hasValue: true,
     args: {
-        "project": { hasValue: true },
-        "contact": { hasValue: false }
+        "project": {
+            hasValue: true,
+            autocomplete(args: string[], trailingSpace: boolean): string[] {
+                if (args.length > 1) return []
+                const prefix = trailingSpace ? '' : ' '
+                const projects = getPortfolio().projects.map(it => it.name)
+                const arg = args[0]
+
+                if (!arg) return projects.map(it => `${prefix}${it}`)
+                return projects.filter(it => it.startsWith(arg))
+            }
+        },
+        "contact": {
+            hasValue: false,
+            autocomplete: () => []
+        }
+    },
+
+    autocomplete(args: string[], trailingSpace: boolean): string[] {
+        const prefix = trailingSpace ? '' : ' '
+        const availableArgs = Object.keys(this.args)
+        const arg = args[0]
+        if (!arg) {
+            return availableArgs.sort().map(it => `${prefix}${it}`)
+        }
+
+        const targetCommand = this.args[arg] as (Argument | undefined)
+        if (!targetCommand) {
+            return availableArgs.filter(it => it.startsWith(arg)).sort()
+        }
+
+        return targetCommand.autocomplete(args.slice(1), trailingSpace)
     },
 
     execute(args: string[], terminal: Terminal): void {

@@ -47,22 +47,41 @@ html, body {
     overflow-y: auto;
 }
 
-#input {
-    all: unset;
-    color: transparent;
-    word-break: break-all;
-    width: fit-content;
-    caret-shape: block;
-    caret-color: #62b3b2;
-    text-align: end;
-    padding: 0;
-    margin: 0;
-
-    transform: rotateZ(180deg);
-}
-
 #commands-input {
     display: inline-flex;
+
+    #input {
+        all: unset;
+        width: fit-content;
+        padding: 0;
+        margin: 0;
+        color: transparent;
+        caret-color: transparent;
+        word-break: break-all;
+        text-align: end;
+
+        transform: rotateZ(180deg);
+    }
+
+    .cursor {
+        @keyframes cursor-animation {
+            0% { opacity: 1; }
+            50% { opacity: 0; }
+            100% { opacity: 1; }
+        };
+
+        position: relative;
+
+        &:before {
+            height: 100%;
+            content: '_';
+            position: absolute;
+            left: 0;
+            bottom: -1px;
+            animation: cursor-animation 1s infinite;
+            color: white;
+        }
+    }
 }
 
 #command {
@@ -77,7 +96,6 @@ label[for=input] {
     .bold-text { font-weight: bold; }
     .italic-text { font-style: italic; }
     .inline { display: inline; }
-
 
     img, video {
         max-width: 90vw;

@@ -8,7 +8,6 @@ export interface ColoredKeyword extends Colored {
 }
 
 export function highlightSyntax(args: string[]): ColoredKeyword[] {
-    console.log(args)
     const result: ColoredKeyword[] = []
 
     const iterator = function* (values: string[]) {

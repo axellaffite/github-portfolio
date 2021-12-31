@@ -8,5 +8,7 @@ export const clear: Command = {
 
     execute(args: string[], terminal: Terminal): void {
         terminal.clear()
-    }
+    },
+
+    autocomplete: () => []
 }
