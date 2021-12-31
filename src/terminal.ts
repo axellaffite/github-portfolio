@@ -4,6 +4,7 @@ import {autocompleteCommand, executeCommand} from "./commands/commands";
 import {history} from "./commandHistory";
 import {processTemplates} from "./template/templateProcessor";
 import {autocompleteColor, keywordColor, variable_paramColor} from "./colors";
+import {autocomplete} from "./autocomplete";
 
 const prompt = [{ color: keywordColor, keyword: '$visitor: '}]
 
@@ -13,7 +14,8 @@ export interface Terminal {
     displayPrompt(): void
     clear(): void
     enableInput(): void
-    setInput(text: string): void
+    getInputValue(): string
+    setInput(text: string, updateAutocomplete?: boolean): void
 }
 
 export const getTerminal = () => terminal
@@ -49,10 +51,14 @@ const terminal: Terminal = {
         input.focus({preventScroll: true})
     },
 
-    setInput(text: string) {
+    getInputValue(): string {
+        return input.value ?? ''
+    },
+
+    setInput(text: string, updateAutocomplete: boolean = false) {
         input.value = text
         input.focus()
-        onType(input)
+        onType(input, false, updateAutocomplete)
     }
 }
 
@@ -102,39 +108,6 @@ function onKeyDown(event: KeyboardEvent): void {
     if (event.key.toLowerCase())
 
     event.preventDefault()
-}
-
-const autocomplete = {
-    values: [] as string[],
-    index: 0,
-
-    setValues(values: string[]) {
-        this.values = values
-        this.index = 0
-    },
-
-    get currentValueOrEmpty(): string {
-        return this.values[this.index] ?? ''
-    },
-
-    nextValue() { this.updateIndex(+1) },
-    prevValue() { this.updateIndex(-1) },
-
-    updateIndex(offset: number) {
-        const mod = (a: number , b: number) => ((a % b) + b) % b
-        if (this.values.length == 0) this.index = 0
-        else this.index = mod((this.index + offset), this.values.length)
-
-        onType(input, false, false)
-    },
-
-    apply() {
-        const toApply = this.values[this.index]
-        if (!toApply) return
-
-        input.value += toApply
-        onType(input, false)
-    }
 }
 
 function onType(el: HTMLInputElement, confirm = false, updateAutocomplete = true): void {
