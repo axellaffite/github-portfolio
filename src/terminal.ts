@@ -59,8 +59,6 @@ const terminal: Terminal = {
         input.value = text
         input.focus()
         onType(input, false, updateAutocomplete)
-
-        setTimeout(() => { input.selectionStart = input.selectionEnd = 10000 }, 0)
     }
 }
 
