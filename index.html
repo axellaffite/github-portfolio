@@ -10,7 +10,9 @@
 <script>
     function focusOnClick() {
         if (!getSelection().toString()) {
-            document.getElementById('input').focus()
+            const input = document.getElementById('input')
+            input.focus()
+            setTimeout(() => { input.selectionStart = input.selectionEnd = 10000 }, 0)
         }
     }
 </script>
@@ -20,7 +22,7 @@
         <div id="display"></div>
         <div id="commands-input">
             <span id="command"></span>
-            <input dir= "ltr" id="input" style="width: 0" onblur="focusOnClick()" autofocus disabled>
+            <input id="input" onblur="focusOnClick()" autofocus disabled>
         </div>
     </div>
 
